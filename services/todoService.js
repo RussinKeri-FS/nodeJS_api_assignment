@@ -24,5 +24,5 @@ const todoServiceById = (id) => {
 
 module.exports = {
     todoService,
-    todoServiceById,
+    todoServiceById
 }

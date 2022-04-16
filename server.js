@@ -12,7 +12,9 @@ require("dotenv").config();
 const {
     todoService,
     todoServiceById,
-} = require("./services/todoService");
+    jokeService,
+    jokeServiceById
+} = require("./services/jokeService");
 
 const app = express();
 
@@ -21,6 +23,7 @@ app.get("/", (req, res,  next) => {
     res.status(200).send("Service is Up!")
 });
 
+
 // get external service
 // http://localhost:3000/todo
 app.get("/todo", (req, res, next) => {
@@ -28,8 +31,22 @@ app.get("/todo", (req, res, next) => {
     .then(result => res.status(200).json(result))
     .catch(err => res.status(501).json({
         error: {
-            message:err.message, 
-            status:err.status
+            message: err.message, 
+            status: err.status
+        }
+    }))
+});
+
+// * * first GET created for joke
+// get random user external service
+// http://localhost:3000/joke
+app.get("/joke", (req, res, next) => {
+    jokeService()
+    .then(result => res.status(200).json(result))
+    .catch(err => res.status(501).json({
+        error: {
+            message: err.message, 
+            status: err.status
         }
     }))
 });
@@ -39,6 +56,22 @@ app.get("/todo", (req, res, next) => {
 app.get("/todo/:todoId", (req, res, next) => {
     const todoId = req.params.todoId;
     todoServiceById(todoId)
+    .then(result => res.status(200).json(result))
+    .catch(err => res.status(err.status || 501).json({
+        error:{
+            message: err.message,
+            status: err.status,
+            method: req.method
+        }
+    }))
+});
+
+// * * second GET created for jokeServiceById
+// get random user external by ID
+// https://localhost:3000/joke/12
+app.get("/joke/:jokeId", (req, res, next) => {
+    const jokeId = req.params.jokeId;
+    jokeServiceById(jokeId)
     .then(result => res.status(200).json(result))
     .catch(err => res.status(err.status || 501).json({
         error:{
