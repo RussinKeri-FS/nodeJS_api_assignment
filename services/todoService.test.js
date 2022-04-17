@@ -1,10 +1,3 @@
-/*
-    Keri Russin
-    WDV353
-    Let's write an API
-    April 15, 2022
-*/
-
 const {
     todoService, todoServiceById
 } = require("./todoService")
