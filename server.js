@@ -14,7 +14,7 @@ const {
     todoServiceById,
     jokeService,
     jokeServiceById
-} = require("./services/todoService");
+} = require("./services/jokeService");
 
 const app = express();
 
@@ -46,7 +46,8 @@ app.get("/joke", (req, res, next) => {
     .catch(err => res.status(501).json({
         error: {
             message: err.message, 
-            status: err.status
+            status: err.status,
+            method: req.method,
         }
     }))
 });
